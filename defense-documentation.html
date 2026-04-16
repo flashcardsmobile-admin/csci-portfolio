@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<title>Defense Documentation - Project Charito</title>
+<meta name=charset content=utf-8>
+<meta name=viewport content="width=device-width, initial-scale=1">
+<link rel=stylesheet href="https://unpkg.com/missing.css@1.2.0">
+
+<header>
+<h1>Project Charito</h1>
+<nav>
+<p class="tool-bar">
+<a href="#purpose">Purpose</a>
+<a href="#research">Research &amp; Background</a>
+<a href="#tools">Languages, Software, and Hardware</a>
+<a href="#requirements">Requirements</a>
+<a href="#implementation">Implementation</a>
+<a href="#test-plan">Test Plan</a>
+<a href="#test-results">Test Results</a>
+<a href="#challenges">Challenges</a>
+<a href="#enhancements">Future Enhancements</a>
+<a href="#presentation-slides">Presentation Slides</a>
+</nav>
+</header>
+<main>
+<section>
+<header><h2 id="purpose">Purpose</h2></header>
+<p>The purpose of the Charito system is to provide biblical research tools
+based on public-domain information so that believers may have more resources
+available to aid their study and scholars may have more resources to do
+research via Church History and source languages.
+</section>
+<section>
+<header><h2 id="research">Research &amp; Background</h2></header>
+<p>The main competitors in this space, Logos and Accordance, are very expensive
+commercial products that also function as bookstores. Bibleworks used to be
+another contender in this space, but rampant piracy caused them to shut down.
+<p>The <a href=https://ccel.org>Christian Classics Ethereal Library (CCEL)</a>
+provides digitized versions of many translated documents from Church History.
+There are also ways to get XML versions of many Greek and Hebrew texts.
+</section>
+<section>
+<header><h2 id="tools">Project
+<a href="#languages">Languages</a>,
+<a href="#software">Software</a>, and
+<a href="#hardware">Hardware</a></h2></header>
+<h3 id="languages">Languages</h3>
+<div class=textcolumns>
+<ul>
+<li>Common Lisp
+<li>AP5
+<li>HTML (via Spinneret)
+<li>CSS
+<li>JavaScript (via Parenscript)
+</ul>
+</div>
+<h3 id="software">Software</h3>
+<div class=textcolumns>
+<ul>
+<li>Steel Bank Common Lisp (SBCL)</li>
+<li>OpenBSD</li>
+<li>OpenSSH</li>
+<li>Nginx</li>
+<li>QuickLisp (Package Manager)</li>
+<li>Clack/Lack</li>
+<li>Ningle</li>
+<li>Woo</li>
+<li>cl-binary-store</li>
+</ul>
+</div>
+<h3 id="hardware">Hardware</h3>
+<div class=textcolumns>
+<ul>
+<li>An old gaming PC.
+<li>A $5 Linode server to relay.
+</ul>
+</div>
+</section>
+<section>
+<header><h2 id=requirements>Project Requirements</h2></header>
+<p>See the relevant file in the class' GitHub
+<a target=_blank href=https://github.com/flashcardsmobile-admin/senior-project/blob/master/docs/Requirements.md>here</a>
+</section>
+<section>
+<header><h2 id=implementation>Project Implementation</h2></header>
+<p>The project is implemented as a website served via a Common Lisp process
+tunneled to the relay via SSH so the ports may be forwarded via Nginx. The
+server runs on a secure
+<a target=_blank href=https://openbsd.org>OpenBSD server</a> that is walled
+off from outside access by my home firewall and by the onboard PF firewall.
+The server has a service file in /etc/rc.d to allow it to be spun up on boot.
+The server runs via the unrivaled
+<a href=https://github.com/fukamachi/woo>Woo</a> web server witten by
+Eitaro&nbsp;Fukamachi.
+
+<p>Before startup, the server process loads in the data from the journal to
+repopulate the database and avoid regenerating the biblical data that was
+gleaned by the source documents. The
+<a href=http://ap5.com>AP5</a>&nbsp;virtual&nbsp;database&nbsp;system manages
+all the data from user accounts to scripture references. It is an ancient AI
+program from 1989, "an extension to commonlisp which allows users to 'program'
+at a more 'specificational' level"
+(<a href=https://ap5.com/ap5-man.html>AP5 Reference Manual</a>). It thus allows
+one to write in a very high-level logic style that is then compiled into
+efficient Lisp code. The server has a binary with AP5 preloaded since the build
+system for the application is completely custom, predating modern standards
+like ASDF and Quicklisp. I had to email the maintainer several times to get it
+working (thanks, Dr. Cohen!).
+
+<p>The data is loaded into AP5 by spidering through XML files in CCEL's THML
+format (THeological Markup Language). The metadata for the files is collected
+so that every time someone in that document cites scripture, the backlink is
+stored in AP5 with the link to where on the CCEL the section or page ought to
+be. Storing these backlinks was a significant hurdle, since anything beyond a
+few trivial sources would easily expand past the bounds of the 512MB that SBCL
+allocates for itself by default. Since the plan is to store the metadata for
+every public document in Church History, a custom on-disk multiway tree was
+found to be sufficient for the read speed and memory savings that the project
+requires. After integrating this into AP5 (trivial with its relation
+annotations), all the metadata could be added with one atomic transaction per
+document. These atomic transactions are still a memory bottleneck, but they
+are easier to manage since they appear one document at a time rather than with
+all documenets at once.
+After having all this data in AP5, it can easily be queried and exposed
+via RESTful HTML routes.
+
+<p>
+<code>&lt;soapbox&gt;</code><br>
+Some may protest and say that REST requires JSON. This is as far from the truth
+as the east is from the west. Roy Fielding himself, the inventor of REST, says
+that
+<a href=https://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven>
+REST APIs must be hypertext-driven</a>. This means HTML. It has always meant
+HTML.<br>
+<code>&lt;/soapbox&gt;</code>
+
+<p>Being HTML-driven does not mean that the project is
+without life; with the <a href=https://leanrada.com/htmz/>power of iframes</a>,
+a simple anchor tag or form can update the page in-place without a SPA
+framework and only a few hundred bytes of JavaScript to channel the existing
+power of the web platform. For lists where I need to be able to search through
+the elements on the client-side, I used lightweight custom elements to create
+special variants of the ul and ol elements. I can now use
+<code>&lt;ul is="filter-ul"&gt; ... &lt;/ul&gt;</code> to enable the
+functionality anywhere in the HTML I want to. This is, in a way, an
+"islands&nbsp;architecture" without a fancy build step.
+
+<p>For styling, I used the venerable Bootstrap library, but with only the
+minimum amount of JavaScript that I actually needed. I was able to trim the
+fat by replicating the two event handlers I needed via an LLM, which I then
+ported from JavaScript to Parenscript and modified to suit my needs. Thanks
+to Bootstrap and AP5, it is trivial to add a dark mode toggle to a user account
+or create similar user-facing settings.
+
+<p>To get the Biblical text, it was also parsing XML documents and turning them
+into a format presentable as HTML. Greek and Hebrew text is fully functional
+also. Logged-in users can save notes to verses which are sanitized to avoid
+reflected XSS.
+
+<p>In conclusion, this product has a core set of good features that are prime
+for expansion.
+</section>
+<section>
+<header><h2 id=test-plan>Test Plan</h2></header>
+<p>See the link on the Github
+<a href=https://github.com/flashcardsmobile-admin/senior-project/blob/master/docs/test-plan.org>
+here</a>.
+</section>
+<section>
+<header><h2 id=test-results>Test Results</h2></header>
+<p>Todo...
+</section>
+<section>
+<header><h2 id="challenges">Challenges Overcome</h2></header>
+<h3>Memory</h3>
+<p>Storing every backlink to every verse in the Bible from even the first 500
+years of Church History, not to mention the whole, is a rather difficult
+problem. Creating the custom data storage method required significant thought
+once that was confirmed as the bottleneck.
+<h3>Custom Framework</h3>
+<p>I decided to create my own custom framework based on Ningle and built up a
+significant number of macros to make my life easier. The project became much
+easier after reading Paul&nbsp;Graham's "On&nbsp;Lisp" and Doug&nbsp;Hoyte's
+"Let&nbsp;Over&nbsp;Lambda." These opened my mind to properly understand
+macros and closures in Lisp and how to abuse these features to create good
+code. Since this is kept behind the veil of the framework, any developers
+added on later won't need to have all that reading.
+<h3>Beta-Quality Web Server</h3>
+<p>For deployment, I used the Woo web server to run my app since Clack can
+talk to all the major Lisp web servers equally well. The problem was that Woo
+had a latent bug on OpenBSD, presuming it had a syscall that only exists on
+FreeBSD and Linux. As a result, I came up with a temporary patch via Grok and
+then opened an issue which resulted in a fix a few days later. Now Woo works
+on OpenBSD without any trouble.
+</section>
+<section>
+<header><h2 id=enhancements>Future Enhancements</h2></header>
+<p>More resources need to be integrated into the system. Existing ones must be
+further connected so that more features can naturally be created. Integration
+of good lexicons ought to be the next major priority. Since AP5 has
+event-driven capabilities, it is hypothetically possible to create
+collaboration and sharing features that can ping people via Server Sent Events.
+I also need to better document the AP5 codebase for my own use, so that I can
+extend it when needed and build upon it for future websites.
+</section>
+<section>
+<header><h2 id="presentation-slides">Presentation Slides</h2></header>
+<p>They can be accessed <a href="./project-presentation.odp">here</a>.
+</section>
+</main>
+<footer><p>This document is copyright &copy; Peter Jackson Link, III. It is
+licensed to you under the <a href=./LICENSE>GNU GPL version 3 or later</a>.</footer>
