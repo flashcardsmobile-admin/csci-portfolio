@@ -2,34 +2,34 @@
 <title>Defense Documentation - Project Charito</title>
 <meta name=charset content=utf-8>
 <meta name=viewport content="width=device-width, initial-scale=1">
-<link rel=stylesheet href="https://unpkg.com/missing.css@1.2.0">
+<link rel=stylesheet href=https://unpkg.com/missing.css@1.2.0>
 
 <header>
 <h1>Project Charito</h1>
 <nav>
-<p class="tool-bar">
-<a href="#purpose">Purpose</a>
-<a href="#research">Research &amp; Background</a>
-<a href="#tools">Languages, Software, and Hardware</a>
-<a href="#requirements">Requirements</a>
-<a href="#implementation">Implementation</a>
-<a href="#test-plan">Test Plan</a>
-<a href="#test-results">Test Results</a>
-<a href="#challenges">Challenges</a>
-<a href="#enhancements">Future Enhancements</a>
-<a href="#presentation-slides">Presentation Slides</a>
+<p class=tool-bar>
+<a href=#purpose>Purpose</a>
+<a href=#research>Research &amp; Background</a>
+<a href=#tools>Languages, Software, and Hardware</a>
+<a href=#requirements>Requirements</a>
+<a href=#implementation>Implementation</a>
+<a href=#test-plan>Test Plan</a>
+<a href=#test-results>Test Results</a>
+<a href=#challenges>Challenges</a>
+<a href=#enhancements>Future Enhancements</a>
+<a href=#presentation-slides>Presentation Slides</a>
 </nav>
 </header>
 <main>
 <section>
-<header><h2 id="purpose">Purpose</h2></header>
+<header><h2 id=purpose>Purpose</h2></header>
 <p>The purpose of the Charito system is to provide biblical research tools
 based on public-domain information so that believers may have more resources
 available to aid their study and scholars may have more resources to do
 research via Church History and source languages.
 </section>
 <section>
-<header><h2 id="research">Research &amp; Background</h2></header>
+<header><h2 id=research>Research &amp; Background</h2></header>
 <p>The main competitors in this space, Logos and Accordance, are very expensive
 commercial products that also function as bookstores. Bibleworks used to be
 another contender in this space, but rampant piracy caused them to shut down.
@@ -38,11 +38,11 @@ provides digitized versions of many translated documents from Church History.
 There are also ways to get XML versions of many Greek and Hebrew texts.
 </section>
 <section>
-<header><h2 id="tools">Project
-<a href="#languages">Languages</a>,
-<a href="#software">Software</a>, and
-<a href="#hardware">Hardware</a></h2></header>
-<h3 id="languages">Languages</h3>
+<header><h2 id=tools>Project
+<a href=#languages>Languages</a>,
+<a href=#software>Software</a>, and
+<a href=#hardware>Hardware</a></h2></header>
+<h3 id=languages>Languages</h3>
 <div class=textcolumns>
 <ul>
 <li>Common Lisp
@@ -52,7 +52,7 @@ There are also ways to get XML versions of many Greek and Hebrew texts.
 <li>JavaScript (via Parenscript)
 </ul>
 </div>
-<h3 id="software">Software</h3>
+<h3 id=software>Software</h3>
 <div class=textcolumns>
 <ul>
 <li>Steel Bank Common Lisp (SBCL)</li>
@@ -66,7 +66,7 @@ There are also ways to get XML versions of many Greek and Hebrew texts.
 <li>cl-binary-store</li>
 </ul>
 </div>
-<h3 id="hardware">Hardware</h3>
+<h3 id=hardware>Hardware</h3>
 <div class=textcolumns>
 <ul>
 <li>An old gaming PC.
@@ -76,8 +76,190 @@ There are also ways to get XML versions of many Greek and Hebrew texts.
 </section>
 <section>
 <header><h2 id=requirements>Project Requirements</h2></header>
-<p>See the relevant file in the class' GitHub
-<a target=_blank href=https://github.com/flashcardsmobile-admin/senior-project/blob/master/docs/Requirements.md>here</a>
+
+<h3>Requirement #1</h3>
+
+<table>
+<tr>
+<td>Description<td>The product shall render the text of the Bible with chapter and verse numbers.
+
+<tr>
+<td>Rationale<td>This has been a standard feature of Bibles for centuries.
+
+<tr>
+<td>Fit Criterion<td>The verses should conform to the standard chapter/verse deliniations in the biblical text.
+
+<tr><td>Priority<td>1
+</table>
+
+<h3>Requirement #2</h3>
+<table>
+<tr><td>Description<td>The product shall allow the user to search for words within the biblical text.
+<tr><td>Rationale<td>This feature is present in Logos/Concordance.
+<tr><td>Fit Criterion<td>There shall be a search utility that peruses the text and returns the correct chapter/verse locations where the word appears in the text.
+<tr><td>Priority<td>1
+</table>
+
+<h3>Requirement #3</h3>
+<table>
+<tr><td>Description<td>The product shall allow the user to select a verse and see the parsing and lexical information in the original language.
+<tr><td>Rationale<td>This feature is present in Logos/Concordance.
+<tr><td>Fit Criterion<td>The feature shall present the words in the verse with lemmas, parsings, and lexicon entries when the verse is selected for more details.
+<tr><td>Priority<td>2
+</table>
+
+<h3>Requirement #4</h3>
+<table>
+<tr><td>Description<td>The product shall allow the user to select a verse and see where it is referenced in commentaries and the writings of the Church Fathers.
+<tr><td>Rationale<td>This feature will make study more convenient.
+<tr><td>Fit Criterion<td>The feature shall present the relevant references which can be opened in another in-application window.
+<tr><td>Priority<td>2
+</table>
+
+<h3>Requirement #5</h3>
+<table>
+<tr><td>Description<td>The product shall render its resources as a hypertext document using standard HTML features.
+<tr><td>Rationale<td>This will allow the user to switch between resources trivially.
+<tr><td>Fit Criterion<td>Extra interactions via JavaScript should be minimized.
+<tr><td>Priority<td>1
+</table>
+
+<h3>Requirement #6</h3>
+<table>
+<tr><td>Description<td>The product shall provide access to multiple public-domain English commentaries.
+<tr><td>Rationale<td>This is helpful for study.
+<tr><td>Fit Criterion<td>Multiple English commentaries should be available to the user.
+<tr><td>Priority<td>1
+</table>
+
+<h3>Requirement #7</h3>
+<table>
+<tr><td>Description<td>The product shall provide access to multiple public-domain English bibles.
+<tr><td>Rationale<td>This is the whole reason for the product. With no bibles, we aren't a bible site.
+<tr><td>Fit Criterion<td>The bibles should be of good quality and/or historical value and available to English-speaking users.
+<tr><td>Priority<td>1
+</table>
+
+<h3>Requirement #8</h3>
+<table>
+<tr><td>Description<td>The product shall provide access to English translations of the complete works of the Church Fathers.
+<tr><td>Rationale<td>These are helpful for study in historical context.
+<tr><td>Fit Criterion<td>The English translations of the works of the Church Fathers should be available to the user.
+<tr><td>Priority<td>1
+</table>
+
+<h3>Requirement #9</h3>
+<table>
+<tr><td>Description<td>The product shall hyperlink verse references in the commentaries and in the Church Fathers.
+<tr><td>Rationale<td>This will allow for easy checking when reading the commentaries and Church Fathers directly.
+<tr><td>Fit Criterion<td>The verse hyperlinks should open inside a Bible text in-app window.
+<tr><td>Priority<td>3
+</table>
+
+<h3>Requirement #10</h3>
+<table>
+<tr><td>Description<td>The product shall allow the user to see the Greek and Hebrew texts directly.
+<tr><td>Rationale<td>This is helpful for study.
+<tr><td>Fit Criterion<td>The product will switch the current content of the current biblical text window just like changing translations.
+<tr><td>Priority<td>1
+</table>
+
+<h3>Requirement #11</h3>
+<table>
+<tr><td>Description<td>The product shall allow the user to select the specific manuscript in Greek/Hebrew view.
+<tr><td>Rationale<td>This will be helpful for study.
+<tr><td>Fit Criterion<td>The manuscripts shown should be shown legibly.
+<tr><td>Priority<td>1
+</table>
+
+<h3>Requirement #12</h3>
+<table>
+<tr><td>Description<td>The product shall allow the user to compare different manuscripts.
+<tr><td>Rationale<td>This is helpful for study.
+<tr><td>Fit Criterion<td>The product will show a diff-like view to see the differences between the manuscripts.
+<tr><td>Priority<td>1
+</table>
+
+<h3>Requirement #13</h3>
+<table>
+<tr><td>Description<td>The product shall allow the user to create an account
+<tr><td>Rationale<td>This is will enable note-taking.
+<tr><td>Fit Criterion<td>The user shall be able to create an account and log in via an email/password.
+<tr><td>Priority<td>2
+</table>
+
+<h3>Requirement #14</h3>
+<table>
+<tr><td>Description<td>The product shall allow signed-in users to take notes.
+<tr><td>Rationale<td>This is helpful for study.
+<tr><td>Fit Criterion<td>The user's journal (stored via file, database, or similar) shall be only viewable by that user.
+<tr><td>Priority<td>2
+</table>
+
+<h3>Requirement #15</h3>
+<table>
+<tr><td>Description<td>The product shall allow the user to automatically create a vocab list from the Greek or Hebrew words found in a particular chapter/verse range.
+<tr><td>Rationale<td>This is helpful for study in the original languages.
+<tr><td>Fit Criterion<td>The product will export the vocab list in a printable format.
+<tr><td>Priority<td>3
+</table>
+
+<h3>Requirement #16</h3>
+<table>
+<tr><td>Description<td>The product shall allow the user to create and view flashcards automatically from the Greek or Hebrew words found in a particular chapter/verse range.
+<tr><td>Rationale<td>This is helpful for study in the original languages.
+<tr><td>Fit Criterion<td>The product will allow the flashcards to be perused in a similar way as FlashcardsMobile.
+<tr><td>Priority<td>3
+</table>
+
+<h3>Requirement #17</h3>
+<table>
+<tr><td>Description<td>The product shall allow the user to customize the font settings of the text for their user account.
+<tr><td>Rationale<td>This is a convenience for the user.
+<tr><td>Fit Criterion<td>The product will allow the font family and size to be selected from a list and saved to the user's account information.
+<tr><td>Priority<td>4
+</table>
+
+<h3>Requirement #18</h3>
+<table>
+<tr><td>Description<td>The product shall allow the user to modify text color and background color for their user account.
+<tr><td>Rationale<td>This is a convenience for the user and gives them something to fiddle with to increase percieved investment in the platform.
+<tr><td>Fit Criterion<td>The product will save the user's preference.
+<tr><td>Priority<td>2
+</table>
+
+<h3>Requirement #19</h3>
+<table>
+<tr><td>Description<td>The product shall allow the user to use a subset of org-style markup within notes.
+<tr><td>Rationale<td>This is by far the superior form of markup. Other formats like Markdown cannot dream to have such power.
+<tr><td>Fit Criterion<td>The product will allow the notes to use a subset of the Emacs org-mode markup language.
+<tr><td>Priority<td>4
+</table>
+
+<h3>Requirement #20</h3>
+<table>
+<tr><td>Description<td>The product shall allow logged-in users to select from a variety of public-domain English translations.
+<tr><td>Rationale<td>This will allow the user to compare the opinions of a variety of translators instead of merely relying on one.
+<tr><td>Fit Criterion<td>The product will save a variety of translations and allow them to be presented as hypertext.
+<tr><td>Priority<td>1
+</table>
+
+<h3>Requirement #21</h3>
+<table>
+<tr><td>Description<td>The product shall query CCEL for new information and pull it into the database during off-hours.
+<tr><td>Rationale<td>This will allow for the system to automatically maintain itself.
+<tr><td>Fit Criterion<td>The product system will pull in new ThML files and parse them in a manner where evaluation errors may be recovered from with a report of files requiring manual intervention.
+<tr><td>Priority<td>2
+</table>
+
+<h3>Requirement #22</h3>
+<table>
+<tr><td>Description<td>The product shall save snapshots of database state every day and before doing maintenance tasks.
+<tr><td>Rationale<td>This will allow the system to be more tolerant of potential errors.
+<tr><td>Fit Criterion<td>The product will save snapshots of database state in a manner that will allow for easy recovery.
+<tr><td>Priority<td>1
+</table>
+
 </section>
 <section>
 <header><h2 id=implementation>Project Implementation</h2></header>
@@ -160,16 +342,57 @@ for expansion.
 </section>
 <section>
 <header><h2 id=test-plan>Test Plan</h2></header>
-<p>See the link on the Github
-<a href=https://github.com/flashcardsmobile-admin/senior-project/blob/master/docs/test-plan.org>
-here</a>.
+<h3>IDENTIFICATION INFORMATION</h3>
+<table>
+<tr><td>Product Name
+    <td>Charito
+<tr><td>Product Description
+    <td>An advanced bible study application utilizing time-tested web technologies and a plethora of public-domain resources.
+<tr><td>Testing Objectives
+    <td>The tests should ensure stability of core features that are hard to directly verify.
+<tr><td>Features to be Tested
+    <td>The Reference Tree
+<tr><td>Features not to be Tested
+    <td>Things that are easy to verify via visiting the website
+</table>
+<h3>INTEGRATION TESTS</h3>
+<table>
+<tr><th>#   <th>Objective                               <th>Input                       <th>Expected Results
+<tr><td>1   <td>Add and fetch single-verse reference    <td>Gen 1:1 #P"testfile"        <td>The file should be verifiably in the DB.
+<tr><td>2   <td>Add and fetch multi-verse reference     <td>Rev 1:1-1:3 #P"testfile"    <td>The file should be verifiably in the DB for verses between and inside the range.
+<tr><td>3   <td>Add and fetch multi-chapter reference   <td>Mal 1:1-2:1 #P"testfile"    <td>The file should be verifiably in the DB for verses between and inside the range.
+</table>
 </section>
 <section>
 <header><h2 id=test-results>Test Results</h2></header>
-<p>Todo...
+<figure>
+<img src=./test-results.png>
+<figcaption>
+<pre>
+* (asdf:test-system :jweb)
+
+Running test suite JWEB-TEST
+ Running test suite FRAMEWORK
+  Running test MAKE-ID-STRING .
+  Running test APPLY-MIDDLEWARE-BASIC .
+  Running test APPLY-MIDDLEWARE-CHAIN ..
+ Running test suite REF-TREE
+  Running test SINGLE-VERSE ..
+  Running test MULTI-VERSE ..
+  Running test MULTI-CHAPTER ..
+ Did 10 checks.
+    Pass: 10 (100%)
+    Skip: 0 ( 0%)
+    Fail: 0 ( 0%)
+
+T
+* 
+</pre>
+</figcaption>
+</figure>
 </section>
 <section>
-<header><h2 id="challenges">Challenges Overcome</h2></header>
+<header><h2 id=challenges>Challenges Overcome</h2></header>
 <h3>Memory</h3>
 <p>Storing every backlink to every verse in the Bible from even the first 500
 years of Church History, not to mention the whole, is a rather difficult
@@ -202,8 +425,8 @@ I also need to better document the AP5 codebase for my own use, so that I can
 extend it when needed and build upon it for future websites.
 </section>
 <section>
-<header><h2 id="presentation-slides">Presentation Slides</h2></header>
-<p>They can be accessed <a href="./project-presentation.odp">here</a>.
+<header><h2 id=presentation-slides>Presentation Slides</h2></header>
+<p>They can be accessed <a href=./project-presentation.odp>here</a>.
 </section>
 </main>
 <footer><p>This document is copyright &copy; Peter Jackson Link, III. It is
